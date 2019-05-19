@@ -31,70 +31,55 @@
 -->
 <!-- TITLE -->
 <div class="mb-40 mt-40">
-    <h1>Order Edit</h1>
+  <h1>Order Edit</h1>
 </div>
 <div class="card mb-40">
-    <div class="card-header">
-        <i class="fa fa-edit"></i> Edit
+  <div class="card-header"><i class="fa fa-edit"></i> Edit</div>
+  <div class="card-body">
+    <form class="form-horizontal">
+      <div class="form-group row">
+        <label class="control-label col-sm-2" for="user">User</label>
+        <div class="col-sm-10">
+          <a
+            *ngIf="item._user"
+            [routerLink]="['/manage-users/', item._user._id]"
+          >
+            {{ item._user.username }}
+            <b> {{ item._user.name }} {{ item._user.surname }} </b>
+          </a>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="control-label col-sm-2" for="date">Date</label>
+        <div class="col-sm-10">
+          {{ item.date | date }}
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="control-label col-sm-2" for="date">Coupon</label>
+        <div class="col-sm-10" *ngIf="item._coupon">
+          {{ item._coupon.code }}
+          <b> {{ item._coupon.discount }} % </b>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="control-label col-sm-2" for="date">Products</label>
+        <div class="col-sm-10">
+          <div *ngFor="let prod of item._products">
+            <b class="w-100-px"> $ {{ prod.price }} </b>
+            <a [routerLink]="['/products/', prod._id]">{{ prod.name }}</a>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <!-- BUTTON BAR -->
+    <div class="mt-40">
+      <button class="btn btn-secondary pull-right mr-2" (click)="goBack()">
+        Back To List
+      </button>
     </div>
-    <div class="card-body">
-        <form #editForm="ngForm" [ngClass]="{'was-validated': formValid!=null}">
-            <div class="row justify-content-md-center">
-                <div class="col-md-10">
-                    <div class="form-group">
-                        <label for="date">Date</label>
-                        <input type="date" class="form-control" id="date" [(ngModel)]="item.date" name="date" #date="ngModel" >
-                    </div>
-                    <!-- RELATIONS -->
-                    <h2 class="mb-20">Relations</h2>
-
-                    <label for="Coupon">Coupon</label>
-                    <select name="_coupon" id="_coupon" [(ngModel)]="item._coupon" class="form-control" #_coupon="ngModel"  >
-                        <option *ngFor="let item of list_coupon" [value]="item._id">{{item._id}}</option>
-                    </select>
-                    <div class="pb-30">
-                        <div class="mb-20">
-                            <label>_products</label>
-
-                            <span class="dropdown ml-20">
-                                <button class="btn btn-dropdown dropdown-toggle" type="button" id="dropdownMenuButton_products" data-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false">
-                                    Add
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton_products">
-                                    <button class="dropdown-item" *ngFor="let item of list_products" [class.disabled]="containProduct(item._id)" (click)="$event.preventDefault(); containProduct(item._id) || addProduct(item._id)">{{item._id}}
-                                    </button>
-                                </div>
-                            </span>
-                        </div>
-                        <div class="mb-40">
-                            <ul class="list-group">
-                                <li class="list-group-item" *ngIf="!item._products || item._products.length == 0">No item found</li>
-                                <li class="list-group-item" *ngFor="let obj of item._products; let i = index">
-                                    {{obj}}
-
-                                    <button class="btn btn-danger pull-right" type="button" (click)="removeProduct(i)">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <label for="User">User</label>
-                    <select name="_user" id="_user" [(ngModel)]="item._user" class="form-control" #_user="ngModel"  >
-                        <option *ngFor="let item of list_user" [value]="item._id">{{item._id}}</option>
-                    </select>
-
-                    
-        
-
-                    <!-- BUTTON BAR -->
-                    <div class="mt-40">
-                        <button class="btn btn-primary pull-right" (click)="save(editForm.valid, item)">Save</button>
-                        <button class="btn btn-secondary pull-right mr-2" (click)="goBack()">Back To List</button>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
+  </div>
 </div>

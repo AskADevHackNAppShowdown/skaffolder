@@ -31,54 +31,85 @@
 -->
 <!-- TITLE -->
 <div class="mb-40 mt-40">
-    <h1>Product Edit</h1>
+  <h1>Product Edit</h1>
 </div>
 <div class="card mb-40">
-    <div class="card-header">
-        <i class="fa fa-edit"></i> Edit
-    </div>
-    <div class="card-body">
-        <form #editForm="ngForm" [ngClass]="{'was-validated': formValid!=null}">
-            <div class="row justify-content-md-center">
-                <div class="col-md-10">
-                    <div class="form-group">
-                        <label for="description">Description</label>
-                        <input type="text" class="form-control" id="description" [(ngModel)]="item.description" name="description" #description="ngModel" >
-                    </div>
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" class="form-control" id="name" [(ngModel)]="item.name" name="name" #name="ngModel" >
-                    </div>
-                    <div class="form-group">
-                        <label for="pict">Pict</label>
-                        <input type="text" class="form-control" id="pict" [(ngModel)]="item.pict" name="pict" #pict="ngModel" >
-                    </div>
-                    <div class="form-group">
-                        <label for="price">Price</label>
-                        <input type="number" class="form-control" id="price" [(ngModel)]="item.price" name="price" #price="ngModel" >
-                    </div>
-                    <!-- RELATIONS -->
-                    <h2 class="mb-20">Relations</h2>
+  <div class="card-header"><i class="fa fa-edit"></i> Edit</div>
+  <div class="card-body">
+    <form #editForm="ngForm" [ngClass]="{ 'was-validated': formValid != null }">
+      <div class="row justify-content-md-center">
+        <div class="col-md-10">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              [(ngModel)]="item.name"
+              name="name"
+              #name="ngModel"
+            />
+          </div>
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea
+              class="form-control"
+              id="description"
+              [(ngModel)]="item.description"
+              name="description"
+              #description="ngModel"
+            >
+            </textarea>
+          </div>
+          <div class="form-group">
+            <label for="price">Price</label>
+            <input
+              type="number"
+              class="form-control"
+              id="price"
+              [(ngModel)]="item.price"
+              name="price"
+              #price="ngModel"
+            />
+          </div>
+          <!-- RELATIONS -->
+          <label for="Category">Category</label>
+          <select
+            name="category"
+            id="category"
+            [(ngModel)]="item.category"
+            class="form-control"
+            #category="ngModel"
+          >
+            <option *ngFor="let item of listCategory" [value]="item._id">{{
+              item.name
+            }}</option>
+          </select>
 
-                    <label for="Category">Category</label>
-                    <select name="category" id="category" [(ngModel)]="item.category" class="form-control" #category="ngModel"  >
-                        <option *ngFor="let item of listCategory" [value]="item._id">{{item._id}}</option>
-                    </select>
+          <h3 *ngIf="externalOrder[0]">Orders</h3>
+          <ul class="list-group">
+            <li class="list-group-item" *ngFor="let item of externalOrder">
+              {{ item._id }}
+            </li>
+          </ul>
 
-                    <h2 *ngIf="externalOrder[0]">External Relations</h2>
-        
-                        <h3 *ngIf="externalOrder[0]">Order</h3>
-                        <ul class="list-group">
-                        <li class="list-group-item" *ngFor="let item of externalOrder">{{item._id}}</li>
-                        </ul>
-
-                    <!-- BUTTON BAR -->
-                    <div class="mt-40">
-                        <button class="btn btn-primary pull-right" (click)="save(editForm.valid, item)">Save</button>
-                        <button class="btn btn-secondary pull-right mr-2" (click)="goBack()">Back To List</button>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
+          <!-- BUTTON BAR -->
+          <div class="mt-40">
+            <button
+              class="btn btn-primary pull-right"
+              (click)="save(editForm.valid, item)"
+            >
+              Save
+            </button>
+            <button
+              class="btn btn-secondary pull-right mr-2"
+              (click)="goBack()"
+            >
+              Back To List
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
 </div>
