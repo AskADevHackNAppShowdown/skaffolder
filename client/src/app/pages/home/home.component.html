@@ -36,7 +36,14 @@
 </div>
 
 <!-- SEARCH FORM -->
-<div>
-  <!-- START LINKS -->
- <!-- END LINKS -->
+<div *ngFor="let item of list">
+  <button
+    class="btn btn-primary btn-sm text-center mr-20 mb-20"
+    (click)="buy()"
+  >
+    Buy it!
+  </button>
+
+  <b> ${{ item.price }} </b>
+  {{ item.name }}
 </div>

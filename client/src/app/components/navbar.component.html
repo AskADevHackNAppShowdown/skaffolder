@@ -47,7 +47,10 @@
     class="collapse navbar-collapse"
     id="navbarSupportedContent"
   >
-    <ul class="navbar-nav mr-auto" *ngIf="user.hasRole('ADMIN')">
+    <ul
+      class="navbar-nav mr-auto"
+      *ngIf="user && user.hasRole && user.hasRole('ADMIN')"
+    >
       <li class="nav-item" routerLinkActive="active">
         <a class="nav-link" routerLink="/admin">Dashboard </a>
       </li>
@@ -91,7 +94,7 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a
             class="dropdown-item"
-            *ngIf="user.hasRole('ADMIN')"
+            *ngIf="user && user.hasRole && user.hasRole('ADMIN')"
             routerLink="/manage-users"
             >Manage User</a
           >
