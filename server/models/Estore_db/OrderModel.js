@@ -29,9 +29,28 @@
  * You will get 10% discount for each one of your friends
  *
  */
+
+// Database
+import Database from "../../classes/Database_Estore_db";
+import mongoose, { Schema } from "mongoose";
 import OrderModelGenerated from "./generated/OrderModelGenerated";
 
 const customModel = {
+  /**
+   * Customize here your schema with custom attributes
+   * 
+   * EXAMPLE:
+    
+    init() {
+      let schema = OrderModelGenerated.init();
+  
+      schema.add({
+        extraCustomField: Object
+      });
+    },
+     
+   */
+
   /**
    * OrderModel.getPopulate
    *   @description CRUD ACTION getPopulate
@@ -43,6 +62,20 @@ const customModel = {
       .findOne({ _id: id })
       .populate("_coupon _products _user");
   }
+
+  /**
+   * Override here your custom queries
+   * EXAMPLE:
+   *
+   
+    async get(id) {
+      console.log("This is my custom query");
+      return await this.getModel()
+        .findOne({ _id: id })
+        .populate("_coupon _products _user");
+    }
+
+   */
 };
 
 export default {

@@ -33,6 +33,7 @@ import Properties from "../../../properties";
 import OrderModel from "../../../models/Estore_db/OrderModel";
 import ErrorManager from "../../../classes/ErrorManager";
 import { authorize } from "../../../security/SecurityManager";
+import OrderController from "../OrderController";
 
 const generatedControllers = {
   /**
@@ -40,21 +41,21 @@ const generatedControllers = {
    */
   init: router => {
     const baseUrl = `${Properties.api}/cart`;
-    router.post(baseUrl + "", authorize([]), generatedControllers.create);
-    router.delete(baseUrl + "/:id", authorize([]), generatedControllers.delete);
+    router.post(baseUrl + "", authorize([]), OrderController.create);
+    router.delete(baseUrl + "/:id", authorize([]), OrderController.delete);
     router.get(
       baseUrl + "/findBy_coupon/:key",
       authorize([]),
-      generatedControllers.findBy_coupon
+      OrderController.findBy_coupon
     );
     router.get(
       baseUrl + "/findBy_products/:key",
       authorize([]),
-      generatedControllers.findBy_products
+      OrderController.findBy_products
     );
-    router.get(baseUrl + "/:id", authorize([]), generatedControllers.get);
-    router.get(baseUrl + "", authorize([]), generatedControllers.list);
-    router.post(baseUrl + "/:id", authorize([]), generatedControllers.update);
+    router.get(baseUrl + "/:id", OrderController.get);
+    router.get(baseUrl + "", authorize([]), OrderController.list);
+    router.post(baseUrl + "/:id", authorize([]), OrderController.update);
   },
 
   // CRUD METHODS
@@ -130,7 +131,7 @@ const generatedControllers = {
    */
   get: async (req, res) => {
     try {
-      const result = await OrderModel.getPopulate(req.params.id);
+      const result = await OrderModel.get(req.params.id);
       res.json(result);
     } catch (err) {
       const safeErr = ErrorManager.getSafeError(err);

@@ -30,17 +30,47 @@
  *
  */
 import OrderControllerGenerated from "./generated/OrderControllerGenerated";
+import Properties from "../../properties";
+import OrderModel from "../../models/Estore_db/OrderModel";
+import ErrorManager from "../../classes/ErrorManager";
+import { authorize } from "../../security/SecurityManager";
 
 const customControllers = {
   /**
-   * OrderModel.get
-   *   @description CRUD ACTION get
-   *   @param ObjectId id Id
-   *
+   * Init routes
    */
+  init: router => {
+    const baseUrl = `${Properties.api}/cart`;
+
+    /**
+     * Override here your custom routes
+     * EXAMPLE:
+     *    router.get(baseUrl + "/:id", customControllers.get);
+     */
+
+    OrderControllerGenerated.init(router);
+  },
+
+  /**
+   * Override here your custom controllers
+   * EXAMPLE:
+   *
+   
+    get: async (req, res) => {
+      try {
+        console.log("This is my custom controller");
+        const result = await OrderModel.getPopulate(req.params.id);
+        res.json(result);
+      } catch (err) {
+        const safeErr = ErrorManager.getSafeError(err);
+        res.status(safeErr.status).json(safeErr);
+      }
+    }
+
+   */
+
   get: async (req, res) => {
     try {
-      console.log("ok");
       const result = await OrderModel.getPopulate(req.params.id);
       res.json(result);
     } catch (err) {
@@ -51,6 +81,6 @@ const customControllers = {
 };
 
 export default {
-  ...customControllers,
-  ...OrderControllerGenerated
+  ...OrderControllerGenerated,
+  ...customControllers
 };
